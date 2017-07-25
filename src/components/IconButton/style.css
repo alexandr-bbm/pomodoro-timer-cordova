@@ -1,0 +1,17 @@
+.icon-button {
+  outline: none;
+  display: inline-flex;
+  align-items: center;
+  border: 1px solid white;
+  background: transparent;
+  border-radius: 5px;
+  color: white;
+  font-size: 14px;
+  padding: 5px 10px;
+  width: 120px;
+
+  &__text {
+    display: flex;
+    align-items: center;
+  }
+}

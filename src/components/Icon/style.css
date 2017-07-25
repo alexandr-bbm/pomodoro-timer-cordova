@@ -1,0 +1,14 @@
+.icon {
+  display: inline-flex;
+  height: 30px;
+  width: 30px;
+
+  & + & {
+    margin-left: 10px;
+  }
+
+  svg {
+    width: 100%;
+    height: 100%;
+  }
+}

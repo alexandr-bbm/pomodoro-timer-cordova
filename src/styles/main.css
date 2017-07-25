@@ -1,0 +1,15 @@
+@font-face {
+    font-family: 'Lobster';
+    src: url('../fonts/Lobster.ttf');
+}
+
+html, body, #app {
+    height: 100%;
+    font-family: 'Lobster', 'Arial', sans-serif ;
+    color: #FFF;
+}
+
+* {
+    user-select: none;
+}
+
