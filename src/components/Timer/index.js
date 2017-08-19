@@ -13,7 +13,7 @@ import {
   INTERVAL_KEYS, playSound,
   PROGRESSBAR_SETTINGS,
 } from "./helper";
-import PictureUpload from "../PictureUpload/index";
+import BackgroundUpload, { removeBackgroundFile } from "../BackgroundUpload/index";
 import { ResetControl } from "../ResetControl/index";
 
 export default class Timer extends Component {
@@ -239,11 +239,12 @@ export default class Timer extends Component {
         </div>
         <div className="settings settings_inline" style={{ marginTop: 20 }}>
           <div className="settings__label" style={{ marginRight: 20 }}>Фон: </div>
-          <PictureUpload
+          <BackgroundUpload
             currentValue={this.state.customBackground}
             defaultValue={getDefaultValue('customBackground')}
-            onUpload={this.handlePictureUpload}
+            onUpload={this.handleBackgroundUpload}
             onResetConfirm={this.handleCustomBackgroundReset}
+            fileName="bg.jpg"
           />
         </div>
       </div>
@@ -251,11 +252,12 @@ export default class Timer extends Component {
   }
 
   handleCustomBackgroundReset = () => {
+    removeBackgroundFile();
     window.localStorage.removeItem('customBackground');
     this.setState({ customBackground: null });
   };
 
-  handlePictureUpload = (imagePath) => {
+  handleBackgroundUpload = (imagePath) => {
     window.localStorage.setItem('customBackground', imagePath);
     this.setState({
       customBackground: imagePath

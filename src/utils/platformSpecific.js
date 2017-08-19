@@ -13,7 +13,7 @@ export const PlatformSpecific = {
         return '/android_asset/www/';
 
       default:
-        throw new Error('Unexpected window.device.platform');
+        return '';
     }
   },
 
@@ -26,7 +26,7 @@ export const PlatformSpecific = {
         return 'amr';
 
       default:
-        throw new Error('Unexpected window.device.platform');
+        return 'wav';
     }
   },
 
@@ -39,7 +39,7 @@ export const PlatformSpecific = {
         return '';
 
       default:
-        throw new Error('Unexpected window.device.platform');
+        return '';
     }
   }
 };

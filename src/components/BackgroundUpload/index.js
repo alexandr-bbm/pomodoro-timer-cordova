@@ -3,7 +3,9 @@ import { Icon } from "../Icon/index";
 import { playSound } from "../Timer/helper";
 import { ResetControl } from "../ResetControl/index";
 
-export default class PictureUpload extends Component {
+export const BACKGROUND_FILENAME = 'bg.jpg';
+
+export default class BackgroundUpload extends Component {
   render() {
     const {
       onResetConfirm,
@@ -27,9 +29,15 @@ export default class PictureUpload extends Component {
   onUploadSuccess = (imageUri) => {
     window.resolveLocalFileSystemURL(imageUri, fileEntry => {
       window.resolveLocalFileSystemURL(cordova.file.cacheDirectory, dirEntry => {
-        fileEntry.moveTo(dirEntry, 'bg.jpg', entry => {
-          this.props.onUpload(entry.nativeURL);
-        });
+        removeBackgroundFile()
+          .then(() => {
+            fileEntry.moveTo(dirEntry, BACKGROUND_FILENAME, entry => {
+              this.props.onUpload(entry.nativeURL);
+            });
+          })
+          .catch(() => {
+            console.log('error removeBackgroundFile')
+          })
       });
     }, () => console.log('error resolveLocalFileSystemURL'));
   };
@@ -65,4 +73,20 @@ export default class PictureUpload extends Component {
       correctOrientation: true,
     }
   }
+}
+
+export function removeBackgroundFile() {
+  return new Promise((resolve, reject) => {
+    window.resolveLocalFileSystemURL(cordova.file.cacheDirectory, dirEntry => {
+      dirEntry.getFile(BACKGROUND_FILENAME, {create:false}, fileEntry => {
+        fileEntry.remove(resolve, reject);
+      }, (err) => {
+        if (err.code === FileError.NOT_FOUND_ERR) {
+          resolve()
+        } else {
+          reject(err);
+        }
+      });
+    });
+  })
 }
